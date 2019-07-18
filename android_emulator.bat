@@ -1,0 +1,1 @@
+C:\Users\alaa\AppData\Local\Android\Sdk\emulator\emulator.exe -avd nexus_6_api_22
