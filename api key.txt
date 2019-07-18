@@ -1,4 +1,0 @@
-Consumer key
-ck_4ff8c57c5c25cac8377f542be4f7648bc09b370d
-Consumer secret
-cs_afd07aa5c18d733592ea37229fb5c50f1457faf4
