@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { WebView } from 'react-native-webview';
-import { View, ActivityIndicator, Text, Button, BackHandler, Image } from 'react-native';
+import { View, ActivityIndicator, Text, Button, BackHandler, Image, StatusBar } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 
 const website = 'developer.hesbaty.com';
 
@@ -8,13 +9,25 @@ export default class App extends Component {
   state = {
     loading: true,
     error: false,
+    isConnected: true,
+    isBackOnline: false,
   }
 
+  unsubscribe = null;
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
+    this.unsubscribe = NetInfo.addEventListener(state => {
+      let isBackOnline = !this.state.isConnected && state.isConnected && state.isInternetReachable;
+      this.setState({ isBackOnline: isBackOnline, isConnected: state.isConnected && state.isInternetReachable, });
+
+      if (isBackOnline) setTimeout(() => this.setState({ isBackOnline: false, }), 3000);
+    });
+    StatusBar.setHidden(true);
   }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton.bind(this));
+    if (this.unsubscribe)
+      this.unsubscribe();
   }
 
   currentUrl = null;
@@ -43,7 +56,7 @@ export default class App extends Component {
   }
 
   render() {
-    return (<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'stretch' }}>
+    return <View style={{ flex: 1, }}>
       <WebView
         source={{ uri: 'http://' + website }}
         ref={wv => this.wv = wv}
@@ -54,7 +67,26 @@ export default class App extends Component {
       />
       {this.renderLoader()}
       {this.renderError()}
-    </View>);
+      {
+        !this.state.isConnected && <View style={{
+          position: 'absolute', top: 0, width: '100%',
+          backgroundColor: '#f00', padding: 6,
+          alignItems: 'center'
+        }}>
+          <Text style={{ color: '#fff', }}>No Connection</Text>
+        </View>
+      }
+
+      {
+        this.state.isBackOnline && <View style={{
+          position: 'absolute', top: 0, width: '100%',
+          backgroundColor: '#0b0', padding: 6,
+          alignItems: 'center'
+        }}>
+          <Text style={{ color: '#fff', }}>You online now</Text>
+        </View>
+      }
+    </View>;
   }
 
   renderLoader = () => !this.state.loading ? null : <View style={{

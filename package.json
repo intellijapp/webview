@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/netinfo": "^4.1.2",
     "react": "16.8.3",
     "react-native": "0.59.8",
     "react-native-webview": "^5.10.0"
@@ -16,6 +17,7 @@
     "@babel/runtime": "^7.4.5",
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
+    "jetifier": "^1.6.3",
     "metro-react-native-babel-preset": "^0.54.1",
     "react-test-renderer": "16.8.3"
   },
