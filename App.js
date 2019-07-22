@@ -82,13 +82,12 @@ export default class App extends Component {
     </View>;
 }
 
-const Navbar = () => <View style={{ height: 60, width: '100%', padding: 10, backgroundColor: '#33a' }}>
-  <View style={{ flex: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-    <Image source={require('./assets/icon.png')} resizeMode='cover'
-      style={{ height: 50, width: 50, marginHorizontal: 10 }}
-    />
-    <Text style={{ color: '#fff', fontSize: 21 }}>Hesbaty</Text>
-  </View>
+const Navbar = () => <View style={{ height: 60, width: '100%', padding: 10, backgroundColor: '#303641' }}>
+<View style={{ flex: 4, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+  <Image source={require('./assets/header.png')} resizeMode='cover'
+    style={{ height: 50, width: 150, marginHorizontal: 10 }}
+  />
+</View>
 </View>;
 
 const Notify = ({ color, text, textColor = '#fff' }) => <View
@@ -100,3 +99,5 @@ const Error = ({ onRety }) => <View style={{ justifyContent: 'center', alignItem
   <Text style={{ padding: 16, fontWeight: 'bold' }}>Network Error</Text>
   <Button onPress={onRety} title='Retry' />
 </View>;
+
+
