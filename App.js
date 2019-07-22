@@ -100,9 +100,9 @@ const Navbar = () => <View style={{
       style={{ height: 50, width: 150, marginHorizontal: 10 }}
     />
   </View>
-  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}
+  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', padding: 10, backgroundColor:'#fff1', borderRadius:4 }}
     onPress={BackHandler.exitApp}>
-    <Text style={{ color: '#fff', fontSize: 24 }}>></Text>
+    <Text style={{ color: '#fff', fontSize: 24 }}>X</Text>
   </TouchableOpacity>
 </View>;
 
