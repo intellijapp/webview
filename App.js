@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { WebView } from 'react-native-webview';
-import { View, ActivityIndicator, Text, Button, BackHandler, Image, StatusBar } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  Text,
+  Button,
+  BackHandler,
+  Image,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
 
 const website = 'developer.hesbaty.com';
@@ -82,12 +91,19 @@ export default class App extends Component {
     </View>;
 }
 
-const Navbar = () => <View style={{ height: 60, width: '100%', padding: 10, backgroundColor: '#303641' }}>
-<View style={{ flex: 4, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-  <Image source={require('./assets/header.png')} resizeMode='cover'
-    style={{ height: 50, width: 150, marginHorizontal: 10 }}
-  />
-</View>
+const Navbar = () => <View style={{
+  height: 60, width: '100%', padding: 10, backgroundColor: '#303641', flexDirection: 'row',
+  justifyContent: 'space-between'
+}}>
+  <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+    <Image source={require('./assets/header.png')} resizeMode='cover'
+      style={{ height: 50, width: 150, marginHorizontal: 10 }}
+    />
+  </View>
+  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}
+    onPress={BackHandler.exitApp}>
+    <Text style={{ color: '#fff', fontSize: 24 }}>></Text>
+  </TouchableOpacity>
 </View>;
 
 const Notify = ({ color, text, textColor = '#fff' }) => <View
