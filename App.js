@@ -57,6 +57,34 @@ export default class App extends Component {
 
   render() {
     return <View style={{ flex: 1, }}>
+      <View style={{ height: 60, width: '100%', padding: 10, backgroundColor: '#33a' }}>
+        <View style={{ flex: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <Image source={require('./assets/icon.png')} resizeMode='cover'
+            style={{ height: 50, width: 50, marginHorizontal: 10 }}
+          />
+          <Text style={{ color: '#fff', fontSize: 21 }}>Hesbaty</Text>
+        </View>
+      </View>
+      {
+        !this.state.isConnected && <View style={{
+          width: '100%',
+          backgroundColor: '#f00', padding: 6,
+          alignItems: 'center'
+        }}>
+          <Text style={{ color: '#fff', }}>No Connection</Text>
+        </View>
+      }
+
+      {
+        this.state.isBackOnline && <View style={{
+          width: '100%',
+          backgroundColor: '#0b0', padding: 6,
+          alignItems: 'center'
+        }}>
+          <Text style={{ color: '#fff', }}>You online now</Text>
+        </View>
+      }
+
       <WebView
         source={{ uri: 'http://' + website }}
         ref={wv => this.wv = wv}
@@ -67,25 +95,6 @@ export default class App extends Component {
       />
       {this.renderLoader()}
       {this.renderError()}
-      {
-        !this.state.isConnected && <View style={{
-          position: 'absolute', top: 0, width: '100%',
-          backgroundColor: '#f00', padding: 6,
-          alignItems: 'center'
-        }}>
-          <Text style={{ color: '#fff', }}>No Connection</Text>
-        </View>
-      }
-
-      {
-        this.state.isBackOnline && <View style={{
-          position: 'absolute', top: 0, width: '100%',
-          backgroundColor: '#0b0', padding: 6,
-          alignItems: 'center'
-        }}>
-          <Text style={{ color: '#fff', }}>You online now</Text>
-        </View>
-      }
     </View>;
   }
 
