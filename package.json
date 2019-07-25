@@ -10,6 +10,7 @@
     "@react-native-community/netinfo": "^4.1.2",
     "react": "16.8.3",
     "react-native": "0.59.8",
+    "react-native-cli": "^2.0.1",
     "react-native-webview": "^5.10.0"
   },
   "devDependencies": {
