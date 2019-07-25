@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { WebView } from 'react-native-webview';
 import {
   View,
@@ -9,6 +9,7 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
 
@@ -62,26 +63,28 @@ export default class App extends Component {
   }
 
   render() {
-    return <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      <Navbar />
-      {!this.state.isConnected && <Notify color='#f00' text='No Connection' />}
-      {this.state.isBackOnline && <Notify color='#0b0' text='You online now' />}
-      {this.state.error && <Error onRety={this.wv.reload} />}
+    return <Fragment>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <Navbar />
+        <Notify color='#f00' text='No Connection' showIf={!this.state.isConnected} />
+        <Notify color='#0b0' text='You online now' showIf={this.state.isBackOnline} />
+        <Error onRety={() => this.wv.reload()} showIf={this.state.error} />
 
-      <WebView
-        source={{ uri: 'http://' + website }}
-        ref={wv => this.wv = wv}
-        onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest} //for iOS
-        onNavigationStateChange={this.onShouldStartLoadWithRequest} //for Android
-        onError={() => this.setState({ error: true })}
-        onLoadStart={() => this.setState({ error: false })}
-        onLoadEnd={() => this.setState({ showSplashScreen: false })}
-        renderLoading={this.loader}
-        javaScriptEnabled
-        domStorageEnabled
-        startInLoadingState
-      />
-    </View>;
+        <WebView
+          source={{ uri: 'http://' + website }}
+          ref={wv => this.wv = wv}
+          onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest} //for iOS
+          onNavigationStateChange={this.onShouldStartLoadWithRequest} //for Android
+          onError={() => this.setState({ error: true })}
+          onLoadStart={() => this.setState({ error: false })}
+          onLoadEnd={() => this.setState({ showSplashScreen: false })}
+          renderLoading={this.loader}
+          javaScriptEnabled
+          domStorageEnabled
+          startInLoadingState
+        />
+      </SafeAreaView>
+    </Fragment>;
   }
 
   loader = () => !this.state.showSplashScreen ? <ActivityIndicator size='large' style={{ marginVertical: 100 }} /> :
@@ -100,18 +103,21 @@ const Navbar = () => <View style={{
       style={{ height: 50, width: 150, marginHorizontal: 10 }}
     />
   </View>
-  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', padding: 10, backgroundColor:'#fff1', borderRadius:4 }}
+
+  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', padding: 10, backgroundColor: '#fff1', borderRadius: 4 }}
     onPress={BackHandler.exitApp}>
     <Text style={{ color: '#fff', fontSize: 24 }}>X</Text>
   </TouchableOpacity>
 </View>;
 
-const Notify = ({ color, text, textColor = '#fff' }) => <View
+const Notify = ({ showIf, color, text, textColor = '#fff' }) => !showIf ? null : <View
   style={{ width: '100%', backgroundColor: color, padding: 6, alignItems: 'center' }}>
   <Text style={{ color: textColor, }}>{text}</Text>
 </View>;
 
-const Error = ({ onRety }) => <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#fffb' }}>
+const Error = ({ onRety, showIf }) => !showIf ? null : <View style={{
+  justifyContent: 'center', alignItems: 'center', backgroundColor: '#fffb'
+}}>
   <Text style={{ padding: 16, fontWeight: 'bold' }}>Network Error</Text>
   <Button onPress={onRety} title='Retry' />
 </View>;
