@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
 
-const website = 'developer.hesbaty.com';
+const website = 'hesbaty.com';
 
 export default class App extends Component {
   state = {
