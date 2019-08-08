@@ -30,7 +30,11 @@ export default class App extends Component {
       let isBackOnline = !this.state.isConnected && state.isConnected && state.isInternetReachable;
       this.setState({ isBackOnline: isBackOnline, isConnected: state.isConnected && state.isInternetReachable, });
 
-      if (isBackOnline) setTimeout(() => this.setState({ isBackOnline: false, }), 3000);
+      if (isBackOnline) {
+        setTimeout(() => this.setState({ isBackOnline: false, }), 3000);
+        if (this.state.error)
+          this.wv.reload();
+      }
     });
     StatusBar.setHidden(true);
   }
@@ -66,9 +70,9 @@ export default class App extends Component {
     return <Fragment>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
         <Navbar />
+
         <Notify color='#f00' text='No Connection' showIf={!this.state.isConnected} />
         <Notify color='#0b0' text='You online now' showIf={this.state.isBackOnline} />
-        <Error onRety={() => this.wv.reload()} showIf={this.state.error} />
 
         <WebView
           source={{ uri: 'http://' + website }}
@@ -79,6 +83,7 @@ export default class App extends Component {
           onLoadStart={() => this.setState({ error: false })}
           onLoadEnd={() => this.setState({ showSplashScreen: false })}
           renderLoading={this.loader}
+          renderError={this.renderError}
           javaScriptEnabled
           domStorageEnabled
           startInLoadingState
@@ -87,6 +92,13 @@ export default class App extends Component {
     </Fragment>;
   }
 
+  renderError = () => {
+    if (this.state.isConnected)
+      return <Error onRety={() => this.wv.reload()} showIf={this.state.error} />;
+    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Image source={require('./assets/noConnection.jpg')} style={{ width: 200, height: 200 }} />
+    </View>;
+  }
   loader = () => !this.state.showSplashScreen ? <ActivityIndicator size='large' style={{ marginVertical: 100 }} /> :
     <View style={{ height: '80%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#fffb', }}>
       <Image source={require('./assets/icon.png')} style={{ width: 200, height: 200 }} />
