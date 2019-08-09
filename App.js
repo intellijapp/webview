@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
 
-const website = 'hesbaty.com';
+const website = 'app.hesbaty.com';
 
 export default class App extends Component {
   state = {
@@ -82,7 +82,7 @@ export default class App extends Component {
           onError={() => this.setState({ error: true })}
           onLoadStart={() => this.setState({ error: false })}
           onLoadEnd={() => this.setState({ showSplashScreen: false })}
-          renderLoading={this.loader}
+          // renderLoading={this.loader}
           renderError={this.renderError}
           javaScriptEnabled
           domStorageEnabled
@@ -95,31 +95,39 @@ export default class App extends Component {
   renderError = () => {
     if (this.state.isConnected)
       return <Error onRety={() => this.wv.reload()} showIf={this.state.error} />;
-    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Image source={require('./assets/noConnection.jpg')} style={{ width: 200, height: 200 }} />
+
+
+     return <View style={{
+      justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff',height: '100%',
+    }}>
+     
+      <Image  source={require('./assets/noConnection.jpg')} style={{ width: 200, height: 200 }} />
+      <Text  style={{ padding: 16,fontWeight: 'bold'  }}>الانترنت غير متصل يرجى التحقق من اتصالك بالانترنت</Text>
+      {/* <Button  onPress={onRety} title='Retry' /> */}
     </View>;
   }
-  loader = () => !this.state.showSplashScreen ? <ActivityIndicator size='large' style={{ marginVertical: 100 }} /> :
-    <View style={{ height: '80%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#fffb', }}>
+  loader = () => !this.state.showSplashScreen ? <ActivityIndicator size='large' style={{ marginVertical:100 }} /> :
+    <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#fffb', }}>
       <Image source={require('./assets/icon.png')} style={{ width: 200, height: 200 }} />
       <ActivityIndicator size="large" />
     </View>;
 }
 
-const Navbar = () => <View style={{
+const Navbar = () =>
+ <View style={{
   height: 60, width: '100%', padding: 10, backgroundColor: '#303641', flexDirection: 'row',
   justifyContent: 'space-between'
 }}>
-  <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+  <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
     <Image source={require('./assets/header.png')} resizeMode='cover'
       style={{ height: 50, width: 150, marginHorizontal: 10 }}
     />
   </View>
 
-  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', padding: 10, backgroundColor: '#fff1', borderRadius: 4 }}
+  {/* <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', padding: 10, backgroundColor: '#fff1', borderRadius: 4 }}
     onPress={BackHandler.exitApp}>
     <Text style={{ color: '#fff', fontSize: 24 }}>▷</Text>
-  </TouchableOpacity>
+  </TouchableOpacity> */}
 </View>;
 
 const Notify = ({ showIf, color, text, textColor = '#fff' }) => !showIf ? null : <View
@@ -128,10 +136,12 @@ const Notify = ({ showIf, color, text, textColor = '#fff' }) => !showIf ? null :
 </View>;
 
 const Error = ({ onRety, showIf }) => !showIf ? null : <View style={{
-  justifyContent: 'center', alignItems: 'center', backgroundColor: '#fffb'
+  justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff',height: '100%',
 }}>
-  <Text style={{ padding: 16, fontWeight: 'bold' }}>Network Error</Text>
-  <Button onPress={onRety} title='Retry' />
+ 
+  <Image  source={require('./assets/noConnection.jpg')} style={{ width: 200, height: 200 }} />
+  <Text  onPress={onRety} style={{ padding: 16,fontWeight: 'bold'  }}>الانترنت غير متصل يرجى التحقق من اتصالك بالانترنت</Text>
+  {/* <Button   title='Retry' /> */}
 </View>;
 
 
