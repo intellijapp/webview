@@ -82,7 +82,7 @@ export default class App extends Component {
           onError={() => this.setState({ error: true })}
           onLoadStart={() => this.setState({ error: false })}
           onLoadEnd={() => this.setState({ showSplashScreen: false })}
-          // renderLoading={this.loader}
+          renderLoading={this.loader}
           renderError={this.renderError}
           javaScriptEnabled
           domStorageEnabled
@@ -102,7 +102,8 @@ export default class App extends Component {
     }}>
      
       <Image  source={require('./assets/noConnection.jpg')} style={{ width: 200, height: 200 }} />
-      <Text  style={{ padding: 16,fontWeight: 'bold'  }}>الانترنت غير متصل يرجى التحقق من اتصالك بالانترنت</Text>
+      <Text  style={{ padding: 16,fontWeight: 'bold' ,justifyContent: 'center', 
+alignItems: 'center' }}>الانترنت غير متصل يرجى التحقق من اتصالك بالانترنت</Text>
       {/* <Button  onPress={onRety} title='Retry' /> */}
     </View>;
   }
@@ -140,7 +141,8 @@ const Error = ({ onRety, showIf }) => !showIf ? null : <View style={{
 }}>
  
   <Image  source={require('./assets/noConnection.jpg')} style={{ width: 200, height: 200 }} />
-  <Text  onPress={onRety} style={{ padding: 16,fontWeight: 'bold'  }}>الانترنت غير متصل يرجى التحقق من اتصالك بالانترنت</Text>
+  <Text  onPress={onRety} style={{ padding: 16,fontWeight: 'bold' ,justifyContent: 'center', 
+alignItems: 'center' }}>الانترنت غير متصل يرجى التحقق من اتصالك بالانترنت</Text>
   {/* <Button   title='Retry' /> */}
 </View>;
 
